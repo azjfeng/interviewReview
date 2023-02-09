@@ -1,0 +1,15 @@
+
+<scroll-view class="page h-100vw border-style-none" scroll-x="{{true}}" scroll-with-animation="true" style="transtrom: translate({{pageX}}px)">
+  <view class="item" data-index = '0' bindtouchstart="touchStart" bindtouchend="touchend" bindtouchmove="touchmove">
+
+  </view>
+    <view class="item" data-index = '1'  bindtouchstart="touchStart" bindtouchend="touchend" bindtouchmove="touchmove">
+    
+  </view>
+    <view class="item" data-index = '2'  bindtouchstart="touchStart" bindtouchend="touchend" bindtouchmove="touchmove">
+    
+  </view>
+    <view class="item" data-index = '3'  bindtouchstart="touchStart" bindtouchend="touchend" bindtouchmove="touchmove">
+    
+  </view>
+</scroll-view>
