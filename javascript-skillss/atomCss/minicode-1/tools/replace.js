@@ -25,7 +25,7 @@ const dom = cheerio.load(getDom(), {
     xmlMode: true,
     decodeEntities: true, // Decode HTML entities.
 });
-console.log(dom('body').children())
+console.log(dom.html())
 // console.log(dom('body').children())
 // console.log(dom('scroll-view').children())
 // console.log('dom', dom('scroll-view').attr('class'))
