@@ -1,0 +1,19 @@
+{
+    "rdhelper.cas.status": "tempclose",
+    "files.associations": {
+      "*.cjson": "jsonc",
+      "*.wxss": "css",
+      "*.wxs": "javascript",
+      "*.wxml": "html"
+    },
+    // 控制是否在键入时自动显示建议
+    "editor.quickSuggestions": {
+      "other": "on",
+      "comments": "on",
+      "strings": "on"
+    },
+    "editor.suggest.showSnippets": true, // 开启代码片段的建议
+    "editor.suggest.snippetsPreventQuickSuggestions": true, // 控制活动代码片段是否阻止快速建议
+    // 控制代码片段是否与其他建议一起显示及其排列的位置: inline 在其他建议中穿插显示代码片段建议; top 在其他建议上方显示代码片段建议;
+    "editor.snippetSuggestions": "inline",
+  }

@@ -1,0 +1,44 @@
+[
+  {
+    "prefix": "border-none",
+    "name": "border-none",
+    "prop": "border",
+    "value": "none",
+    "description": "消除边框样式"
+  },
+  {
+    "prefix": "border-0",
+    "name": "border-0",
+    "prop": "border",
+    "value": "0",
+    "description": ""
+  },
+  {
+    "prefix": "border-unset",
+    "name": "border-unset",
+    "prop": "border",
+    "value": "unset",
+    "description": ""
+  },
+  {
+    "prefix": "border-style-none",
+    "name": "border-style-none",
+    "prop": "border-style",
+    "value": "none",
+    "description": "设置边框线条为 none"
+  },
+  {
+    "prefix": "margin-30",
+    "name": "margin-30",
+    "prop": "margin",
+    "value": "30px",
+    "description": "设置边框线条为 none"
+  },
+  {
+    "prefix": "ta-center",
+    "name": "ta-center",
+    "prop": "text-aligin",
+    "value": "center",
+    "description": "设置边框线条为 none"
+  }
+]
