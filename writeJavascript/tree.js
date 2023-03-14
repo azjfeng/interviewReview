@@ -6,6 +6,7 @@ let arr = [
     { id: 5, name: "部门5", pid: 4 },
 ];
 
+// 递归
 function tree(data, result, pid) {
     for (var item of data) {
         if (item.pid === pid) {
@@ -21,3 +22,29 @@ const arrayToTree = (data, pid) => {
     return result;
 };
 console.log(arrayToTree(arr, 0));
+
+function getTree(arr){
+    let result = []
+    let itemMap = {}
+    for (const item of arr) {
+        itemMap[item.id] = {...item, children: []}
+    }
+
+    for (const item of arr) {
+        const id = item.id;
+        const pid = item.pid
+        const treeItem = itemMap[id]
+        if(pid === 0){
+            result.push(item)
+        }else{
+            if(!itemMap[pid]){
+                itemMap[pid] = {
+                    children: []
+                }
+            }
+            // 将当前item push到id等于1的值中
+            itemMap[pid].children.push(treeItem)
+        }
+    }
+    return result
+}
