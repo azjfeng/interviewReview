@@ -29,3 +29,9 @@
     3. 兄弟组件通信使用父组件做中转
     4. 父组件向后台组件传值使用context或者useContext
     5. 非后代组件使用redux或者context设置全局变量
+
+### 5. React和Vue之间的区别
+    1. 数据绑定方式不同，Vue使用Proxy进行双向数据绑定，React使用事件驱动手动赋值。
+    2. 数据流通方式不同，Vue双向流通，React单向流通。
+    3. 页面渲染方式不同，Vue使用Template模板渲染，React使用JSX渲染。
+    4. Vue是MVVM框架，专注于数据层，React专注是视图层。
