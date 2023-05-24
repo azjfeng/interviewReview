@@ -37,8 +37,15 @@
   {
     "prefix": "ta-center",
     "name": "ta-center",
-    "prop": "text-aligin",
+    "prop": "text-align",
     "value": "center",
     "description": "设置边框线条为 none"
+  },
+  {
+    "prefix": "color-red",
+    "name": "color-red",
+    "prop": "color",
+    "value": "red",
+    "description": "字体颜色红色"
   }
 ]

@@ -25,8 +25,8 @@
                 "value": "0"
             },
             {
-                "prop": "height",
-                "value": "2rpx"
+                "prop": "border-bottom",
+                "value": "2rpx solid red"
             },
             {
                 "prop": "transform-origin",

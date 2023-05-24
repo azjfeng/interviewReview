@@ -1,15 +1,42 @@
-
-<scroll-view class="page h-100vw border-style-none" scroll-x="{{true}}" scroll-with-animation="true" style="transtrom: translate({{pageX}}px)">
-  <view class="item" data-index = '0' bindtouchstart="touchStart" bindtouchend="touchend" bindtouchmove="touchmove">
-
+<scroll-view
+  class="page h-100vw margin-30 ta-center"
+  scroll-x="{{ true }}"
+  scroll-with-animation="true"
+>
+  <view
+    class="border-0 color-red at-line-bottom-after"
+    data-index="0"
+    bindtouchstart="touchStart"
+    bindtouchend="touchend"
+    bindtouchmove="touchmove"
+  >
+    俄文尺寸
   </view>
-    <view class="item" data-index = '1'  bindtouchstart="touchStart" bindtouchend="touchend" bindtouchmove="touchmove">
-    
+  <view
+    class="margin-30 ta-center"
+    data-index="1"
+    bindtouchstart="touchStart"
+    bindtouchend="touchend"
+    bindtouchmove="touchmove"
+  >
+    但是
   </view>
-    <view class="item" data-index = '2'  bindtouchstart="touchStart" bindtouchend="touchend" bindtouchmove="touchmove">
-    
+  <view
+    class="border-0 color-red"
+    data-index="2"
+    bindtouchstart="touchStart"
+    bindtouchend="touchend"
+    bindtouchmove="touchmove"
+  >
+    到底是
   </view>
-    <view class="item" data-index = '3'  bindtouchstart="touchStart" bindtouchend="touchend" bindtouchmove="touchmove">
-    
-  </view>
-</scroll-view>
+  <view
+    class="border-0 color-red"
+    data-index="3"
+    bindtouchstart="touchStart"
+    bindtouchend="touchend"
+    bindtouchmove="touchmove"
+  >
+    但是
+  </view></scroll-view
+>
