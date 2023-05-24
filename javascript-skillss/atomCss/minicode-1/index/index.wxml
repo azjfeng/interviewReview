@@ -1,42 +1,27 @@
-<scroll-view
-  class="page h-100vw margin-30 ta-center"
-  scroll-x="{{ true }}"
-  scroll-with-animation="true"
->
-  <view
-    class="border-0 color-red at-line-bottom-after"
-    data-index="0"
-    bindtouchstart="touchStart"
-    bindtouchend="touchend"
-    bindtouchmove="touchmove"
+<scroll-view class="page" scroll-x="{{ true }}" scroll-with-animation="true">
+  <view class="a">
+    aadsdsad
+    <view
+      class="item"
+      data-index="3"
+      bindtouchstart="touchStart"
+      bindtouchend="touchend"
+      bindtouchmove="touchmove"
+    >
+      但是
+    </view></view
   >
-    俄文尺寸
-  </view>
-  <view
-    class="margin-30 ta-center"
-    data-index="1"
-    bindtouchstart="touchStart"
-    bindtouchend="touchend"
-    bindtouchmove="touchmove"
-  >
-    但是
-  </view>
-  <view
-    class="border-0 color-red"
-    data-index="2"
-    bindtouchstart="touchStart"
-    bindtouchend="touchend"
-    bindtouchmove="touchmove"
-  >
-    到底是
-  </view>
-  <view
-    class="border-0 color-red"
-    data-index="3"
-    bindtouchstart="touchStart"
-    bindtouchend="touchend"
-    bindtouchmove="touchmove"
-  >
-    但是
-  </view></scroll-view
+<view class="g"><view class="e">
+  <view class="b">
+    <view
+      class="item"
+      data-index="3"
+      bindtouchstart="touchStart"
+      bindtouchend="touchend"
+      bindtouchmove="touchmove"
+    >
+      但是
+    </view></view>
+</view></view>
+  </scroll-view
 >

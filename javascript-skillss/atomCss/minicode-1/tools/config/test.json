@@ -26,5 +26,12 @@
     "prop": "border-style",
     "value": "none",
     "description": "设置边框线条为 none"
+  },
+  {
+    "prefix": "position-relative",
+    "name": "position-relative",
+    "prop": "position",
+    "value": "relative",
+    "description": "设置元素position属性为relative"
   }
 ]

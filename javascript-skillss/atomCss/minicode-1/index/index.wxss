@@ -2,7 +2,14 @@
   margin: 30px;
   text-align: center;
 }
-
+.a .item{
+  text-align: center;
+  color: blue;
+}
+.e .b .item{
+  text-align: center;
+  color: green;
+}
 .item{
   border: 0;
   color: red;

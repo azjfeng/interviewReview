@@ -78,22 +78,21 @@ async function paraseHtml(fullpath) {
   const $ = getDom(fullpath);
   const body = $("body")[0];
   const cssMap = await complier(fullpath);
-  const cssJsonMap = {}; //记录替换过的class
-  loopDomTree(body, $, cssMap, cssJsonMap);
+  loopDomTree(body, $, cssMap);
 
   /**
    * 将文件重写进html
    */
-  // let html = $.html();
-  // html = html.replace("<body>", "");
-  // html = html.replace("</body>", "");
-  // fs.writeFile(
-  //   path.join(__dirname, `${fullpath}/${fileName}.wxml`),
-  //   html,
-  //   (err) => {
-  //     console.log(err);
-  //   }
-  // );
+  let html = $.html();
+  html = html.replace("<body>", "");
+  html = html.replace("</body>", "");
+  fs.writeFile(
+    path.join(__dirname, `${fullpath}/${fileName}.wxml`),
+    html,
+    (err) => {
+      console.log(err);
+    }
+  );
 }
 
 paraseHtml(fullpath);
@@ -102,7 +101,7 @@ paraseHtml(fullpath);
 /**
  * 递归将dom的class属性替换成代码块格式，如果没有对应的代码块，就保持原有class类名
  */
-function loopDomTree(elem, $, cssMap, cssJsonMap) {
+function loopDomTree(elem, $, cssMap) {
   if (!elem || elem.type === "text") return;
   if (elem.name !== "body") {
     const attributes = elem.attributes;
@@ -111,57 +110,19 @@ function loopDomTree(elem, $, cssMap, cssJsonMap) {
       if (item.name === "class") {
         const classList = item.value.split(" ").filter((item) => item);
         classList.forEach((element) => {
-          // 判断是否存在代码块
           if (cssMap[element]) {
-            let arr = cssMap[element];
-            for (const key in cssMap) {
-              const reg = new RegExp(`${element}$`);
-              if (reg.test(key) && key.split(" ").length > 1) {
-                // console.log(parseTag(elem, key, element));
-                const bool = parseTag(elem, key, element)
-                if(bool){
-                  console.log('dsdsdsdaa',key, cssMap[key])
-                }
-                console.log("bool", bool)
-              }
-            }
-            newCssList.push(cssMap[element]);
+            newCssList.push(...cssMap[element]);
           } else {
             newCssList.push(element);
           }
         });
       }
     });
-    // console.log("newCssList", elem.name , newCssList)
     $(elem).attr("class", newCssList.join(" "));
   }
   _.each(elem.childNodes, function (childElem) {
-    loopDomTree(childElem, $, cssMap, cssJsonMap);
+    loopDomTree(childElem, $, cssMap);
   });
-}
-
-/**
- * 获取当前元素的父元素和顶级元素,通过递归判断是否形成完整路径
- */
-
-function parseTag(elem, key, element) {
-  const arr = key.split(" ");
-  let index = arr.length - 2
-  while((elem.parent && elem.parent.name !== 'body') && index >= 0){
-    console.log(elem.parent.attributes[0].value, arr[index], element);
-    if(elem.parent.attributes[0].value.split(" ").indexOf(arr[index]) !== -1){
-      elem = elem.parent
-      index--
-    }else{
-      return false
-    }
-  }
-  if(index < 0 ){
-    return true
-  }
-  console.log("arrwww", element);
-
-  return false;
 }
 
 function parseAttr(elem, $, snippets, cssMap) {}
@@ -208,8 +169,7 @@ async function complier(fullPath) {
     const { selector, nodes } = item;
     _.each(nodes, (el) => {
       if (el.type == "decl") {
-        const key =
-          el.parent.selector && el.parent.selector.replaceAll(".", "");
+        const key = el.parent.selector && el.parent.selector.split(".")[1];
         if (cssMap[key]) {
           cssMap[key].push({ prop: el.prop, value: el.value });
         } else {
@@ -219,6 +179,8 @@ async function complier(fullPath) {
     });
   });
 
+
+  console.log("cssmap", cssMap);
   for (const key in cssMap) {
     if (Object.hasOwnProperty.call(cssMap, key)) {
       const element = cssMap[key];
@@ -232,8 +194,6 @@ async function complier(fullPath) {
       cssMap[key] = arr;
     }
   }
-  // console.log("cssmap2222323", cssMap);
-
   return cssMap;
 }
 
@@ -268,18 +228,18 @@ function replaceCss(snippets, cssProps) {
   const { prop, value } = cssProps;
   while (left < right) {
     if (snippets[left].prop === prop && snippets[left].value === value) {
-      return snippets[left];
+      return snippets[left].name;
     } else if (
       snippets[right].prop === prop &&
       snippets[right].value === value
     ) {
-      return snippets[right];
+      return snippets[right].name;
     }
     left++;
     right--;
   }
   if (snippets[left].prop === prop && snippets[left].value === value) {
-    return snippets[left];
+    return snippets[left].name;
   }
   return "";
 }
