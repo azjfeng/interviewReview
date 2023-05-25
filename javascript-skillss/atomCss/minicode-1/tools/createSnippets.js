@@ -29,8 +29,6 @@ function initCss() {
               content += `.${el.name}{${el.prop} : ${el.value}}`;
             }
           });
-    console.log(content);
-
           fs.writeFile(path.join(__dirname, "../atom.wxss"), content, (err) => {
             console.log(err);
           });
