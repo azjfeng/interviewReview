@@ -78,8 +78,13 @@ async function paraseHtml(fullpath) {
   const $ = getDom(fullpath);
   const body = $("body")[0];
   const cssMap = await complier(fullpath);
-  loopDomTree(body, $, cssMap);
-
+  const cssJsonMap = {}; //记录所有需要替换的节点
+  loopDomTree(body, $, cssMap, cssJsonMap);
+  for (const key in cssJsonMap) {
+    const element = key.split(' ').join(' .')
+    console.log(`.${element}`)
+    $(`.${element}`).attr("class", cssJsonMap[key]);
+  }
   /**
    * 将文件重写进html
    */
@@ -96,33 +101,84 @@ async function paraseHtml(fullpath) {
 }
 
 paraseHtml(fullpath);
-// bar.tick(total)
+bar.tick(total)
 
 /**
  * 递归将dom的class属性替换成代码块格式，如果没有对应的代码块，就保持原有class类名
  */
-function loopDomTree(elem, $, cssMap) {
+function loopDomTree(elem, $, cssMap, cssJsonMap) {
   if (!elem || elem.type === "text") return;
   if (elem.name !== "body") {
     const attributes = elem.attributes;
     const newCssList = [];
+    let str = ''
     _.each(attributes, (item) => {
       if (item.name === "class") {
         const classList = item.value.split(" ").filter((item) => item);
         classList.forEach((element) => {
+          // 判断是否存在代码块
           if (cssMap[element]) {
-            newCssList.push(...cssMap[element]);
+            let arr = cssMap[element];
+            for (const key in cssMap) {
+              const reg = new RegExp(`${element}$`);
+              if (reg.test(key) && key.split(" ").length > 1) {
+                const bool = parseTag(elem, key, element);
+                if (bool) {
+                  str = key
+                  arr.push(...cssMap[key]);
+                }
+              }
+            }
+            newCssList.push(...arr);
           } else {
-            newCssList.push(element);
+            newCssList.push(  {
+              name: element,
+              prop: element,
+            },);
           }
         });
       }
     });
-    $(elem).attr("class", newCssList.join(" "));
+    const obj = {};
+    newCssList.reverse().forEach((item) => {
+      if (!obj[item.prop]) {
+        obj[item.prop] = item.name;
+      }
+    });
+    cssJsonMap[str || elem.attributes[0].value] = Object.values(obj).join(" ")
   }
   _.each(elem.childNodes, function (childElem) {
-    loopDomTree(childElem, $, cssMap);
+    loopDomTree(childElem, $, cssMap, cssJsonMap);
   });
+}
+
+/**
+ * 获取当前元素的父元素和顶级元素,通过递归判断是否形成完整路径
+ */
+
+function parseTag(elem, key, element) {
+  let el = elem;
+  const arr = key.split(" ");
+  let index = arr.length - 2;
+  while (el.parent && el.parent.name !== "body" && index >= 0) {
+    console.log(
+      "attributes",
+      el.parent.attributes,
+      arr[index],
+      el.parent.name
+    );
+    if (el.parent.attributes[0].value.split(" ").indexOf(arr[index]) !== -1) {
+
+      el = el.parent;
+      index--;
+    } else {
+      return false;
+    }
+  }
+  if (index < 0 && el.attributes[0].value.split(" ").indexOf(arr[0]) !== -1) {
+    return true;
+  }
+  return false;
 }
 
 function parseAttr(elem, $, snippets, cssMap) {}
@@ -169,7 +225,8 @@ async function complier(fullPath) {
     const { selector, nodes } = item;
     _.each(nodes, (el) => {
       if (el.type == "decl") {
-        const key = el.parent.selector && el.parent.selector.split(".")[1];
+        const key =
+          el.parent.selector && el.parent.selector.replaceAll(".", "");
         if (cssMap[key]) {
           cssMap[key].push({ prop: el.prop, value: el.value });
         } else {
@@ -179,8 +236,6 @@ async function complier(fullPath) {
     });
   });
 
-
-  console.log("cssmap", cssMap);
   for (const key in cssMap) {
     if (Object.hasOwnProperty.call(cssMap, key)) {
       const element = cssMap[key];
@@ -194,6 +249,8 @@ async function complier(fullPath) {
       cssMap[key] = arr;
     }
   }
+  // console.log("cssmap2222323", cssMap);
+
   return cssMap;
 }
 
@@ -228,18 +285,18 @@ function replaceCss(snippets, cssProps) {
   const { prop, value } = cssProps;
   while (left < right) {
     if (snippets[left].prop === prop && snippets[left].value === value) {
-      return snippets[left].name;
+      return snippets[left];
     } else if (
       snippets[right].prop === prop &&
       snippets[right].value === value
     ) {
-      return snippets[right].name;
+      return snippets[right];
     }
     left++;
     right--;
   }
   if (snippets[left].prop === prop && snippets[left].value === value) {
-    return snippets[left].name;
+    return snippets[left];
   }
   return "";
 }
