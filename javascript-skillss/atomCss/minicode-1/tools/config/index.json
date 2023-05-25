@@ -47,5 +47,12 @@
     "prop": "color",
     "value": "red",
     "description": "字体颜色红色"
+  },
+  {
+    "prefix": "color-red",
+    "name": "color-blue",
+    "prop": "color",
+    "value": "blue",
+    "description": "字体颜色蓝色"
   }
 ]

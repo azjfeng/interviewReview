@@ -78,26 +78,30 @@ async function paraseHtml(fullpath) {
   const $ = getDom(fullpath);
   const body = $("body")[0];
   const cssMap = await complier(fullpath);
-  const cssJsonMap = {}; //记录替换过的class
+  const cssJsonMap = {}; //记录所有需要替换的节点
   loopDomTree(body, $, cssMap, cssJsonMap);
-
+  for (const key in cssJsonMap) {
+    const element = key.split(' ').join(' .')
+    console.log(`.${element}`)
+    $(`.${element}`).attr("class", cssJsonMap[key]);
+  }
   /**
    * 将文件重写进html
    */
-  // let html = $.html();
-  // html = html.replace("<body>", "");
-  // html = html.replace("</body>", "");
-  // fs.writeFile(
-  //   path.join(__dirname, `${fullpath}/${fileName}.wxml`),
-  //   html,
-  //   (err) => {
-  //     console.log(err);
-  //   }
-  // );
+  let html = $.html();
+  html = html.replace("<body>", "");
+  html = html.replace("</body>", "");
+  fs.writeFile(
+    path.join(__dirname, `${fullpath}/${fileName}.wxml`),
+    html,
+    (err) => {
+      console.log(err);
+    }
+  );
 }
 
 paraseHtml(fullpath);
-// bar.tick(total)
+bar.tick(total)
 
 /**
  * 递归将dom的class属性替换成代码块格式，如果没有对应的代码块，就保持原有class类名
@@ -107,6 +111,7 @@ function loopDomTree(elem, $, cssMap, cssJsonMap) {
   if (elem.name !== "body") {
     const attributes = elem.attributes;
     const newCssList = [];
+    let str = ''
     _.each(attributes, (item) => {
       if (item.name === "class") {
         const classList = item.value.split(" ").filter((item) => item);
@@ -117,23 +122,30 @@ function loopDomTree(elem, $, cssMap, cssJsonMap) {
             for (const key in cssMap) {
               const reg = new RegExp(`${element}$`);
               if (reg.test(key) && key.split(" ").length > 1) {
-                // console.log(parseTag(elem, key, element));
-                const bool = parseTag(elem, key, element)
-                if(bool){
-                  console.log('dsdsdsdaa',key, cssMap[key])
+                const bool = parseTag(elem, key, element);
+                if (bool) {
+                  str = key
+                  arr.push(...cssMap[key]);
                 }
-                console.log("bool", bool)
               }
             }
-            newCssList.push(cssMap[element]);
+            newCssList.push(...arr);
           } else {
-            newCssList.push(element);
+            newCssList.push(  {
+              name: element,
+              prop: element,
+            },);
           }
         });
       }
     });
-    // console.log("newCssList", elem.name , newCssList)
-    $(elem).attr("class", newCssList.join(" "));
+    const obj = {};
+    newCssList.reverse().forEach((item) => {
+      if (!obj[item.prop]) {
+        obj[item.prop] = item.name;
+      }
+    });
+    cssJsonMap[str || elem.attributes[0].value] = Object.values(obj).join(" ")
   }
   _.each(elem.childNodes, function (childElem) {
     loopDomTree(childElem, $, cssMap, cssJsonMap);
@@ -145,22 +157,27 @@ function loopDomTree(elem, $, cssMap, cssJsonMap) {
  */
 
 function parseTag(elem, key, element) {
+  let el = elem;
   const arr = key.split(" ");
-  let index = arr.length - 2
-  while((elem.parent && elem.parent.name !== 'body') && index >= 0){
-    console.log(elem.parent.attributes[0].value, arr[index], element);
-    if(elem.parent.attributes[0].value.split(" ").indexOf(arr[index]) !== -1){
-      elem = elem.parent
-      index--
-    }else{
-      return false
+  let index = arr.length - 2;
+  while (el.parent && el.parent.name !== "body" && index >= 0) {
+    console.log(
+      "attributes",
+      el.parent.attributes,
+      arr[index],
+      el.parent.name
+    );
+    if (el.parent.attributes[0].value.split(" ").indexOf(arr[index]) !== -1) {
+
+      el = el.parent;
+      index--;
+    } else {
+      return false;
     }
   }
-  if(index < 0 ){
-    return true
+  if (index < 0 && el.attributes[0].value.split(" ").indexOf(arr[0]) !== -1) {
+    return true;
   }
-  console.log("arrwww", element);
-
   return false;
 }
 

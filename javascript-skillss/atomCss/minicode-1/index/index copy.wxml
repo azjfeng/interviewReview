@@ -3,7 +3,7 @@
     <view class="e">
       <view class="b">
         <view
-          class="color-red"
+          class="item"
           data-index="3"
           bindtouchstart="touchStart"
           bindtouchend="touchend"
@@ -11,12 +11,12 @@
         >
           但是
         </view>
-      </view>
+        </view>
     </view>
   </view>
-  <view class="color-red">
+  <view class="a">
     <view
-      class="color-blue ta-center border-0 position-relative"
+      class="item"
       data-index="3"
       bindtouchstart="touchStart"
       bindtouchend="touchend"
@@ -24,5 +24,5 @@
     >
       但是
     </view>
-  </view></scroll-view
->
+    </view>
+</scroll-view>

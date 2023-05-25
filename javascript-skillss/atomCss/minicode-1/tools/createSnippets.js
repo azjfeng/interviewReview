@@ -5,7 +5,6 @@ function initCss() {
   fs.readdir(path.join(__dirname, "./config"), (err, files) => {
     if (err) return;
     let dataList = [];
-    console.log(files);
     files.forEach((item, key) => {
       fs.readFile(path.join(__dirname, `./config/${item}`), (err, data) => {
         if (err) throw err;
@@ -30,6 +29,8 @@ function initCss() {
               content += `.${el.name}{${el.prop} : ${el.value}}`;
             }
           });
+    console.log(content);
+
           fs.writeFile(path.join(__dirname, "../atom.wxss"), content, (err) => {
             console.log(err);
           });

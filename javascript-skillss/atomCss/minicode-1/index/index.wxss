@@ -2,6 +2,9 @@
   margin: 30px;
   text-align: center;
 }
+.a{
+  color: red;
+}
 .a .item{
   text-align: center;
   color: blue;
@@ -9,6 +12,7 @@
 .e .b .item{
   text-align: center;
   color: green;
+  border: 0;
 }
 .item{
   border: 0;
