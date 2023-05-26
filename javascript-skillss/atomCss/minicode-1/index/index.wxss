@@ -2,8 +2,15 @@
   margin: 30px;
   text-align: center;
 }
-
+.g{
+  color: red;
+}
 .a{
+  color: red;
+  position: relative;
+  text-align: center;
+}
+.b{
   color: red;
   position: relative;
   text-align: center;
@@ -22,7 +29,7 @@
 }
 .a .item{
   text-align: center;
-  color: blue;
+  color: red;
 }
 .e .b .item{
   text-align: center;
@@ -31,6 +38,6 @@
 }
 .item{
   border: 0;
-  color: red;
+  color: blue;
   position: relative;
 }

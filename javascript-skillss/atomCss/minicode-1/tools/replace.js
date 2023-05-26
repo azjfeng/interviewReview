@@ -125,9 +125,7 @@ function loopDomTree(elem, $, cssMap, cssJsonMap) {
     });
     const obj = {};
     newCssList.forEach((item) => {
-      if (!obj[item.prop]) {
-        obj[item.prop] = item.name;
-      }
+      obj[item.prop] = item.name;
     });
     cssJsonMap[str || elem.attributes[0].value] = {
       type: str ? "compound" : "single",
