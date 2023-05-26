@@ -8,6 +8,11 @@
   position: relative;
   text-align: center;
 }
+.e{
+  color: blue;
+  position: relative;
+  text-align: center;
+}
 .a::after{
   content:'';
   position: absolute;

@@ -49,7 +49,7 @@
     "description": "字体颜色红色"
   },
   {
-    "prefix": "color-red",
+    "prefix": "color-blue",
     "name": "color-blue",
     "prop": "color",
     "value": "blue",

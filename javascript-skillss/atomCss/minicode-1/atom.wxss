@@ -1,3 +1,9 @@
+.pt-36 {
+  padding-top: 36rpx;
+}
+.pt-40 {
+  padding-top: 40rpx;
+}
 .border-none {
   border: none;
 }

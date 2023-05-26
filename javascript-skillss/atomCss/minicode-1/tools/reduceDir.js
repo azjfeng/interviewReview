@@ -7,7 +7,6 @@ function reduceDir(root, parse){
     const info = fs.statSync(root)
     if(!info.isDirectory()){
         if(root.indexOf('wxml') != -1){
-            console.log("root", root)
             parse(root)
         }
         return

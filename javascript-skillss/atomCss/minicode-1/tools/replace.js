@@ -8,7 +8,7 @@ const colors = require("colors-console");
 const _ = require("underscore");
 const ProgressBar = require("progress");
 const { compare, calculate } = require("specificity");
-const { fullPath, fileName } = require("./path");
+const { fullPath, includeDir } = require("./path");
 const total = 100;
 const bar = new ProgressBar("  处理中 [:bar]  :percent", {
   total,
@@ -18,7 +18,6 @@ const bar = new ProgressBar("  处理中 [:bar]  :percent", {
 });
 
 const { reduceDir } = require("./reduceDir");
-const dirpath = path.join(__dirname, '../page')
 
 /**
  * 将wxml转成dom
@@ -29,10 +28,7 @@ function getDom(fullPath) {
   //   "utf8"
   // )}`;
 
-  let html = `<body>${fs.readFileSync(
-    fullPath,
-    "utf8"
-  )}</body>`;
+  let html = `<body>${fs.readFileSync(fullPath, "utf8")}</body>`;
 
   // 替换换行符
   const newHtml = html.replace(/\r|\n/g, "");
@@ -69,23 +65,26 @@ async function paraseHtml(fullpath) {
   const cssMap = await complier(fullpath);
   const cssJsonMap = {}; //记录所有需要替换的节点
   loopDomTree(body, $, cssMap, cssJsonMap);
-  for (const key in cssJsonMap) {
-    const element = key.split(" ").join(" .");
-    $(`.${element}`).attr("class", cssJsonMap[key]);
-  }
+
+  // 将需要替换的class反转排序，从最内层向外替换
+  Object.keys(cssJsonMap).reverse().forEach(el=>{
+    let element = "";
+    if (cssJsonMap[el].type === "single") {
+      element = el.split(" ").join(".");
+    } else {
+      element = el.split(" ").join(" .");
+    }
+    $(`.${element}`).attr("class", cssJsonMap[el].value);
+  })
   /**
    * 将文件重写进html
    */
   let html = $.html();
   html = html.replace("<body>", "");
   html = html.replace("</body>", "");
-  fs.writeFile(
-    fullpath,
-    html,
-    (err) => {
-      console.log(err);
-    }
-  );
+  fs.writeFile(fullpath, html, (err) => {
+    console.log(err);
+  });
 }
 
 /**
@@ -125,12 +124,15 @@ function loopDomTree(elem, $, cssMap, cssJsonMap) {
       }
     });
     const obj = {};
-    newCssList.reverse().forEach((item) => {
+    newCssList.forEach((item) => {
       if (!obj[item.prop]) {
         obj[item.prop] = item.name;
       }
     });
-    cssJsonMap[str || elem.attributes[0].value] = Object.values(obj).join(" ");
+    cssJsonMap[str || elem.attributes[0].value] = {
+      type: str ? "compound" : "single",
+      value: Object.values(obj).join(" "),
+    };
   }
   _.each(elem.childNodes, function (childElem) {
     loopDomTree(childElem, $, cssMap, cssJsonMap);
@@ -179,11 +181,10 @@ function getJSON() {
  * 获取wxss的代码块映射组
  */
 async function complier(fullPath, fileName) {
-  const filepath = fullPath.replace('wxml', 'wxss')
+  const filepath = fullPath.replace("wxml", "wxss");
   const snippets = [];
-  const cssAst = await getCssAst(
-    filepath
-  );
+  const cssAst = await getCssAst(filepath);
+
   const jsonConfig = await getJSON();
 
   jsonConfig.forEach((item, key) => {
@@ -226,8 +227,6 @@ async function complier(fullPath, fileName) {
       cssMap[key] = arr;
     }
   }
-  // console.log("cssmap2222323", cssMap);
-
   return cssMap;
 }
 
@@ -280,8 +279,12 @@ function replaceCss(snippets, cssProps) {
 
 function run() {
   console.log(colors("green", "开始转换页面"));
-  reduceDir(dirpath, paraseHtml)
-  paraseHtml(path.join(__dirname, fullPath));
+  if (includeDir) {
+    reduceDir(path.join(__dirname, includeDir), paraseHtml);
+  }
+  if (fullPath) {
+    paraseHtml(path.join(__dirname, fullPath));
+  }
   bar.tick(total);
   console.log(colors("green", "页面转换完成"));
 }

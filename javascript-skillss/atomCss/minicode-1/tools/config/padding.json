@@ -1,0 +1,16 @@
+[
+    {
+      "prefix": "padding-top-36rpx",
+      "name": "pt-36",
+      "prop": "padding-top",
+      "value": "36rpx",
+      "description": ""
+    },
+    {
+        "prefix": "padding-top-40rpx",
+        "name": "pt-40",
+        "prop": "padding-top",
+        "value": "40rpx",
+        "description": ""
+      }
+  ]
