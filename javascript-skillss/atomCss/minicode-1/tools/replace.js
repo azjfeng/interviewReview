@@ -66,6 +66,7 @@ async function paraseHtml(fullpath) {
   const cssJsonMap = {}; //记录所有需要替换的节点
   loopDomTree(body, $, cssMap, cssJsonMap);
 
+  console.log("cssjsonmap", cssJsonMap)
   // 将需要替换的class反转排序，从最内层向外替换
   Object.keys(cssJsonMap).reverse().forEach(el=>{
     let element = "";
@@ -150,7 +151,8 @@ function parseTag(elem, key, element) {
       el = el.parent;
       index--;
     } else {
-      return false;
+      el = el.parent
+      // return false;
     }
   }
   if (index < 0 && el.attributes[0].value.split(" ").indexOf(arr[0]) !== -1) {

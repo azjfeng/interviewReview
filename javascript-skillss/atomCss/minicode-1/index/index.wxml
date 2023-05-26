@@ -1,7 +1,7 @@
 <scroll-view class="page" scroll-x="{{ true }}" scroll-with-animation="true">
   <view class="color-red">
     <view class="color-blue position-relative ta-center">
-      <view class="color-blue position-relative ta-center border-0">
+      <view class="border-0 color-blue position-relative ta-center">
         <view
           class="border-0 color-blue position-relative ta-center"
           data-index="3"
