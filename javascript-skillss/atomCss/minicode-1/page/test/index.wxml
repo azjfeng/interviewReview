@@ -1,1 +1,28 @@
-<scroll-view class="page" scroll-x="{{ true }}" scroll-with-animation="true">  <view class="g">    <view class="e">      <view class="position-relative color-red border-0">        <view class="border-0 ta-center position-relative color-red" data-index="3" bindtouchstart="touchStart" bindtouchend="touchend" bindtouchmove="touchmove">          但是        </view>      </view>    </view>  </view>  <view class="ta-center position-relative color-red">    <view class="color-blue ta-center border-0 position-relative" data-index="3" bindtouchstart="touchStart" bindtouchend="touchend" bindtouchmove="touchmove">      但是    </view>  </view></scroll-view>
+<scroll-view class="page" scroll-x="{{ true }}" scroll-with-animation="true">
+  <view class="g">
+    <view class="e">
+      <view class="position-relative color-red border-0">
+        <view
+          class="border-0 ta-center position-relative color-red"
+          data-index="3"
+          bindtouchstart="touchStart"
+          bindtouchend="touchend"
+          bindtouchmove="touchmove"
+        >
+          但是
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="ta-center position-relative color-red">
+    <view
+      class="color-blue ta-center border-0 position-relative"
+      data-index="3"
+      bindtouchstart="touchStart"
+      bindtouchend="touchend"
+      bindtouchmove="touchmove"
+    >
+      但是
+    </view>
+  </view></scroll-view
+>

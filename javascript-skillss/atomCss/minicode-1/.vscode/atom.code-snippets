@@ -1,4 +1,25 @@
 {
+  "at-line-bottom-after": {
+    "scope": "html",
+    "prefix": "at-line-bottom-after",
+    "body": ["at-line-bottom-after"],
+    "description": [
+      "【集合属性】at-line-bottom-after",
+      "设置下边框线条在 after 上",
+      "(下边框颜色需自己额外设置)",
+      "属性详情如下:",
+      ".at-line-bottom-after::after {",
+      "  content: \"\";",
+      "  position: absolute;",
+      "  left: 0;",
+      "  bottom: 0;",
+      "  right: 0;",
+      "  height: 2rpx;",
+      "  transform-origin: 0 100%;",
+      "  transform: scaleY(0.5);",
+      "}"
+    ]
+  },
   "padding-top-36rpx": {
     "scope": "html",
     "prefix": "padding-top-36rpx",
@@ -34,51 +55,6 @@
     "prefix": "border-style-none",
     "body": ["border-style-none"],
     "description": "设置边框线条为 none"
-  },
-  "margin-30": {
-    "scope": "html",
-    "prefix": "margin-30",
-    "body": ["margin-30"],
-    "description": "设置边框线条为 none"
-  },
-  "ta-center": {
-    "scope": "html",
-    "prefix": "ta-center",
-    "body": ["ta-center"],
-    "description": "设置边框线条为 none"
-  },
-  "color-red": {
-    "scope": "html",
-    "prefix": "color-red",
-    "body": ["color-red"],
-    "description": "字体颜色红色"
-  },
-  "color-blue": {
-    "scope": "html",
-    "prefix": "color-blue",
-    "body": ["color-blue"],
-    "description": "字体颜色蓝色"
-  },
-  "at-line-bottom-after": {
-    "scope": "html",
-    "prefix": "at-line-bottom-after",
-    "body": ["at-line-bottom-after"],
-    "description": [
-      "【集合属性】at-line-bottom-after",
-      "设置下边框线条在 after 上",
-      "(下边框颜色需自己额外设置)",
-      "属性详情如下:",
-      ".at-line-bottom-after::after {",
-      "  content: \"\";",
-      "  position: absolute;",
-      "  left: 0;",
-      "  bottom: 0;",
-      "  right: 0;",
-      "  height: 2rpx;",
-      "  transform-origin: 0 100%;",
-      "  transform: scaleY(0.5);",
-      "}"
-    ]
   },
   "position-relative": {
     "scope": "html",
